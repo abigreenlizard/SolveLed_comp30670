@@ -10,18 +10,19 @@ def main():
     args = parser.parse_args()
 
     global text, ledGrid #, count
-    count = 0
     text = getFile(args.input)
     ledGrid = [[False]*int(text[0]) for i in range(int(text[0]))]
+    count = 0
 
     for line in text:
        count += applyCommand(line)
-       print("Total lights on", count)
-    print(count)
+#       print("Total lights on", count)
+#    print(count)
 
 
 def getFile(input):
     tempFile = "{}/../temp/input.txt".format(os.path.dirname(os.path.realpath(__file__)))
+    print(os.path.realpath(__file__))
     isURL = re.match(r'http://*', input)
     if isURL:
         urlretrieve(input, tempFile)
@@ -70,5 +71,5 @@ def applyCommand(line):
                    tempCount -= 1
                ledGrid[i][j] = not ledGrid[i][j]
 
-    print("number of lightts changed", tempCount)
+#    print("number of lightts changed", tempCount)
     return tempCount
