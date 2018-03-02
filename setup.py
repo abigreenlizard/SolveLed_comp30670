@@ -10,10 +10,11 @@ setuptools.setup(
 
     description="led assignment for comp30670",
     long_description=open('README.rst').read(),
+    package=['SolveLed'],
+#    packages=setuptools.find_packages(),
 
-    packages=setuptools.find_packages(),
-
-    install_requires=[],
+    install_requires=[
+    ],
 
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -24,4 +25,7 @@ setuptools.setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
+    entry_points = {
+        'console_scripts': ['solveled=SolveLed.main:main'],
+    }
 )
