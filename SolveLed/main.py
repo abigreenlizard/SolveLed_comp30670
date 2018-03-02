@@ -7,17 +7,19 @@ from shutil import copy
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input')
+#    parser.add_argument('--verbose')
     args = parser.parse_args()
 
-    global text, ledGrid #, count
+    global text, ledGrid, gridLength #, count
     text = getFile(args.input)
-    ledGrid = [[False]*int(text[0]) for i in range(int(text[0]))]
+    gridLength = int(text[0])
+    ledGrid = [[False]*gridLength for i in range(gridLength)]
     count = 0
 
     for line in text:
        count += applyCommand(line)
-#       print("Total lights on", count)
-#    print(count)
+#       if args.verbose=="t":
+    print("Final number of lights on:", count)
 
 
 def getFile(input):
@@ -42,34 +44,41 @@ def applyCommand(line):
     inner1, inner2 = int(command.group(3)), int(command.group(5))+1
     tempCount = 0
 
-    for i in [outer1, outer2, inner1, inner2]:
-        if i<0:
-            i=0
-        if i>999:
-            i=999
+    l = [outer1, outer2, inner1, inner2]
+#    commandList = []
+#    for i in l:
+#        if i<0:
+#            commandList.append(0)
+#            print("caught", i)
+#        elif i>gridLength:
+#            commandList.append(gridLength)
+#            print("caught", i)
+#        else:
+#            commandList.append(i)
+#    commandList = [i for i in l]
+    commandList = [0 if i<0 else gridLength if i>gridLength else i for i in l]
 
     if command.group(1)=="turn on":
-       for i in range(outer1, outer2):
-           for j in range(inner1, inner2):
+       for i in range(commandList[0], commandList[1]):
+           for j in range(commandList[2], commandList[3]):
                if ledGrid[i][j] == False:
                    tempCount += 1
                ledGrid[i][j] = True
 
     elif command.group(1)=="turn off":
-       for i in range(outer1, outer2):
-           for j in range(inner1, inner2):
+       for i in range(commandList[0], commandList[1]):
+           for j in range(commandList[2], commandList[3]):
                if ledGrid[i][j] == True:
                    tempCount -= 1
                ledGrid[i][j] = False
 
     else:
-       for i in range(outer1, outer2):
-           for j in range(inner1, inner2):
+       for i in range(commandList[0], commandList[1]):
+           for j in range(commandList[2], commandList[3]):
                if ledGrid[i][j] == False:
                    tempCount += 1
                else:
                    tempCount -= 1
                ledGrid[i][j] = not ledGrid[i][j]
 
-#    print("number of lightts changed", tempCount)
     return tempCount
