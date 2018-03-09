@@ -20,7 +20,6 @@ class TestSolveLed(unittest.TestCase):
 
     def test_getBadFile(self):
         text = getFile("aMadeUpFile.txt")
-#        self.assertRaises(FileNotFoundError, getFile, "made-upFile.txt")
 
     def test_applyTurnOnCommand(self):
         gridLength = 5

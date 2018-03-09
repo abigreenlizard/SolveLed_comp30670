@@ -2,6 +2,7 @@ import argparse
 import re
 import os
 from urllib.request import urlretrieve
+from urllib.error import HTTPError
 from shutil import copy
 
 def main():
@@ -28,7 +29,7 @@ def getFile(input):
     if isURL:
         try:
             urlretrieve(input, tempFile)
-        except FileNotFoundError:
+        except HTTPError:
             print("File not found, please check the URL and connection to the internet")
             return 0
     else:
