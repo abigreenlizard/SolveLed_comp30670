@@ -9,7 +9,7 @@ setuptools.setup(
     author_email="conor.hopkins@ucdconnect.ie",
 
     description="led assignment for comp30670",
-    long_description=open('README.rst').read(),
+    long_description=open('docs/README.md').read(),
     package=['SolveLed'],
 #    packages=setuptools.find_packages(),
 
